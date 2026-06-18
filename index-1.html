@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Heartlands: From Ashes to Empire</title>
+  <meta name="description" content="Heartlands: From Ashes to Empire — живой мир Ильнира, где история продолжается даже без игрока. Мир помнит." />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #050505;
+      color: #e8dfcf;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.92)),
+        url("assets/images/image_hero.png") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero-box {
+      max-width: 900px;
+      border: 1px solid rgba(181,138,69,.25);
+      border-radius: 28px;
+      padding: 45px 25px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    h1 {
+      font-size: clamp(44px, 11vw, 96px);
+      letter-spacing: 4px;
+      line-height: .95;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      color: #b58a45;
+      font-size: clamp(18px, 4vw, 32px);
+      letter-spacing: 3px;
+      margin-top: 18px;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      max-width: 680px;
+      margin: 30px auto 0;
+      color: #b7ad99;
+      font-size: 20px;
+    }
+
+    .buttons {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid rgba(181,138,69,.4);
+      border-radius: 14px;
+      padding: 14px 24px;
+      color: #e8dfcf;
+      background: rgba(181,138,69,.12);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 13px;
+      transition: .3s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+
+    .btn:hover {
+      background: rgba(181,138,69,.22);
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 80px 22px;
+      border-top: 1px solid rgba(181,138,69,.18);
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .kicker {
+      color: #b58a45;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(34px, 6vw, 58px);
+      margin-bottom: 20px;
+      line-height: 1.05;
+    }
+
+    h3 {
+      color: #b58a45;
+      margin-bottom: 10px;
+      font-size: 23px;
+    }
+
+    p {
+      color: #b7ad99;
+      font-size: 18px;
+    }
+
+    .world-image {
+      margin-top: 35px;
+      width: 100%;
+      display: block;
+      border-radius: 24px;
+      border: 1px solid rgba(181,138,69,.20);
+      box-shadow: 0 20px 70px rgba(0,0,0,.40);
+    } 
+
+    .world-video-wrapper {
+      margin-top: 35px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(181,138,69,.20);
+      box-shadow: 0 20px 70px rgba(0,0,0,.40);
+      background: #111;
+      aspect-ratio: 16 / 9;
+    }
+
+    .world-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 35px;
+    }
+
+    .card {
+      border: 1px solid rgba(181,138,69,.18);
+      border-radius: 22px;
+      background: linear-gradient(#151412, #0b0b0a);
+      padding: 22px;
+      min-height: 210px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+      transition: .3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(181,138,69,.45);
+      box-shadow: 0 15px 40px rgba(181,138,69,.12);
+    }
+
+    .card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #111;
+      border-radius: 16px;
+      border: 1px solid rgba(181,138,69,.12);
+      margin-bottom: 18px;
+      transition: .4s ease;
+    }
+
+    .card:hover img { transform: scale(1.03); }
+
+    .clickable { cursor: pointer; }
+
+    .sealed {
+      opacity: .58;
+      filter: grayscale(.35);
+    }
+
+    .system-card {
+      min-height: 180px;
+    }
+
+    .system-code {
+      font-size: 34px;
+      color: #b58a45;
+      line-height: 1;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+
+    .archive {
+      background:
+        linear-gradient(rgba(0,0,0,.72), rgba(0,0,0,.95)),
+        url("assets/images/image_archive.png") center/cover no-repeat;
+    }
+
+    .quote {
+      margin-top: 35px;
+      border-left: 3px solid #b58a45;
+      border-radius: 20px;
+      padding: 24px;
+      background: rgba(181,138,69,.08);
+      font-size: 24px;
+      color: #e8dfcf;
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      width: min(760px, 95vw);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #0d0d0d;
+      border: 1px solid rgba(181,138,69,.3);
+      border-radius: 24px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.6);
+    }
+
+    .modal-image {
+      width: 100%;
+      display: none;
+    }
+
+    .modal-image.show {
+      display: block;
+    }
+
+    .modal-text {
+      padding: 28px;
+    }
+
+    .modal-text h3 {
+      font-size: 34px;
+      margin-bottom: 12px;
+    }
+
+    .modal-text p {
+      font-size: 18px;
+      color: #b7ad99;
+    }
+
+    .modal-close {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      font-size: 42px;
+      line-height: 1;
+      color: #e8dfcf;
+      cursor: pointer;
+      z-index: 10000;
+    }
+
+    footer {
+      text-align: center;
+      padding: 45px 20px;
+      background: #020202;
+      border-top: 1px solid rgba(181,138,69,.25);
+    }
+
+    @media (max-width: 850px) {
+      .grid { grid-template-columns: 1fr; }
+      section { padding: 65px 18px; }
+
+      .hero-box {
+        border-radius: 22px;
+        padding: 36px 20px;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+      }
+
+      .modal-content {
+        width: 94vw;
+        max-height: 86vh;
+      }
+
+      .modal-text h3 { font-size: 28px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hero">
+    <div class="hero-box">
+      <h1>Heartlands</h1>
+      <div class="subtitle">From Ashes to Empire</div>
+      <p class="tagline">
+        Мир не ждёт игрока. Мир живёт, воюет, меняется и помнит.
+        Ильнир ещё не открыл свои двери. Но история уже началась.
+      </p>
+      <div class="buttons">
+        <a class="btn" href="#about">О проекте</a>
+        <a class="btn" href="#archive">Войти в Великий Архив</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container">
+      <div class="kicker">О проекте</div>
+      <h2>Живой мир Ильнира</h2>
+      <p>
+        Heartlands: From Ashes to Empire — это Living World RPG,
+        где история продолжается даже без игрока. Государства рождаются и исчезают,
+        династии борются за власть, войны меняют карту, а мир запоминает поступки.
+      </p>
+    </div>
+  </section>
+
+  <section id="atlas">
+  <div class="container">
+    <div class="kicker">Атлас Ильнира</div>
+
+    <h2>Карта живого мира</h2>
+
+    <p>
+      Пепельный Разлом всё ещё дышит под кожей мира.
+      Реки текут, города растут, торговые пути меняются,
+      а история продолжает писать новые летописи.
+    </p>
+
+    <div class="world-video-wrapper">
+      <video
+        class="world-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="assets/images/image_map.png">
+        <source src="assets/videos/map.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+  <section id="world">
+    <div class="container">
+      <div class="kicker">Мир Ильнира</div>
+      <h2>Мир не ждёт игрока</h2>
+      <p>
+        Ильнир — живой континент, где государства возникают и исчезают,
+        династии ведут войны, торговцы открывают новые пути,
+        города растут, деревни исчезают, а история продолжается даже без вашего участия.
+      </p>
+
+      <img class="world-image" src="assets/images/image_world.png" alt="Мир Ильнира">
+    </div>
+  </section>
+
+  <section id="systems">
+    <div class="container">
+      <div class="kicker">12 столпов</div>
+      <h2>Системы Heartlands</h2>
+
+      <div class="grid">
+        <div class="card system-card clickable" onclick="openModal('', 'EMS — Emergent Memory System', 'Мир запоминает поступки игрока, решения правителей, судьбы династий, войны, предательства и великие свершения. Память становится частью симуляции.')">
+          <div class="system-code">EMS</div>
+          <h3>Мир помнит</h3>
+          <p>Emergent Memory System.</p>
+        </div>
+
+        <div class="card system-card clickable" onclick="openModal('', 'PHS — Persistent Historical Simulation', 'История Ильнира продолжается без игрока. Рождаются люди, гибнут правители, меняются государства, возникают новые эпохи и исчезают старые порядки.')">
+          <div class="system-code">PHS</div>
+          <h3>История продолжается</h3>
+          <p>Persistent Historical Simulation.</p>
+        </div>
+
+        <div class="card system-card clickable" onclick="openModal('', 'LTD — Last Thread Doctrine', 'Последняя Нить даёт шанс пережить смерть, но каждая спасённая жизнь оставляет последствия. Когда нити заканчиваются, смерть становится окончательной.')">
+          <div class="system-code">LTD</div>
+          <h3>Последняя Нить</h3>
+          <p>Last Thread Doctrine.</p>
+        </div>
+
+        <div class="card system-card sealed clickable" onclick="sealedRecord('WGA — World Generation Action')"><div class="system-code">WGA</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('DPE — Dynamic Political Evolution')"><div class="system-code">DPE</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('SRS — Survival Reality System')"><div class="system-code">SRS</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('LCA — Living Culture Architecture')"><div class="system-code">LCA</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('LWD — Living Warfare Doctrine')"><div class="system-code">LWD</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('LES — Living Economy System')"><div class="system-code">LES</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('WIS — World Information System')"><div class="system-code">WIS</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('DGS — Dynamic Governance System')"><div class="system-code">DGS</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+        <div class="card system-card sealed clickable" onclick="sealedRecord('LMS — Living Magic System')"><div class="system-code">LMS</div><h3>Запечатано</h3><p>Запись ожидает открытия Архива.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="civilizations">
+    <div class="container">
+      <div class="kicker">Цивилизации</div>
+      <h2>Народы Ильнира</h2>
+
+      <div class="grid">
+        <div class="card clickable" onclick="openModal('assets/images/civilizations/civilization_chud.png', 'Подгорная Чудь', 'Древнейшая из сохранившихся цивилизаций Ильнира. После Пепельного Разлома Чудь ушла глубоко под горы и превратила память в своё главное сокровище.')">
+          <img src="assets/images/civilizations/civilization_chud.png" alt="Подгорная Чудь">
+          <h3>Подгорная Чудь</h3>
+          <p>Хранители Памяти.</p>
+        </div>
+
+        <div class="card clickable" onclick="openModal('assets/images/civilizations/civilization_drevlyane.png', 'Древляне', 'Древний народ лесов и священных рощ. Древляне живут в гармонии с природой и чтят духов предков.')">
+          <img src="assets/images/civilizations/civilization_drevlyane.png" alt="Древляне">
+          <h3>Древляне</h3>
+          <p>Хранители Живого Мира.</p>
+        </div>
+
+        <div class="card clickable" onclick="openModal('assets/images/civilizations/civilization_barons.png', 'Побережье Баронов', 'Морская конфедерация баронских домов, капитанов, торговцев и частных флотов. Их власть держится на портах, кораблях и торговых путях.')">
+          <img src="assets/images/civilizations/civilization_barons.png" alt="Побережье Баронов">
+          <h3>Побережье Баронов</h3>
+          <p>Хранители Морей.</p>
+        </div>
+
+        <div class="card clickable" onclick="openModal('assets/images/civilizations/civilization_temple.png', 'Храмовый Собор', 'Один из трёх великих столпов Ильнира. Храмовый Собор хранит веру, надежду и духовное единство земель после Пепельного Разлома.')">
+          <img src="assets/images/civilizations/civilization_temple.png" alt="Храмовый Собор">
+          <h3>Храмовый Собор</h3>
+          <p>Хранители Веры.</p>
+        </div>
+
+        <div class="card clickable" onclick="openModal('assets/images/civilizations/civilization_tower.png', 'Башня Магии', 'Главный центр знаний Ильнира. Магистры Башни изучают магию, Пепельный Разлом, древние хроники и тайны мира.')">
+          <img src="assets/images/civilizations/civilization_tower.png" alt="Башня Магии">
+          <h3>Башня Магии</h3>
+          <p>Хранители Знания.</p>
+        </div>
+
+        <div class="card clickable" onclick="openModal('assets/images/civilizations/civilization_ashen_clans.png', 'Пепельные Рода', 'Потомки людей, оставшихся рядом с Пепельным Разломом. Они научились жить там, где другие не выживают.')">
+          <img src="assets/images/civilizations/civilization_ashen_clans.png" alt="Пепельные Рода">
+          <h3>Пепельные Рода</h3>
+          <p>Хранители Разлома.</p>
+        </div>
+
+        <div class="card sealed clickable" onclick="sealedRecord('Людские Княжества')"><h3>Людские Княжества</h3><p>Запись ещё не открыта Архивом.</p></div>
+        <div class="card sealed clickable" onclick="sealedRecord('Северные Кланы')"><h3>Северные Кланы</h3><p>Запись ещё не открыта Архивом.</p></div>
+        <div class="card sealed clickable" onclick="sealedRecord('Степные Кочевники')"><h3>Степные Кочевники</h3><p>Запись ещё не открыта Архивом.</p></div>
+        <div class="card sealed clickable" onclick="sealedRecord('Восточные Гильдии')"><h3>Восточные Гильдии</h3><p>Запись ещё не открыта Архивом.</p></div>
+        <div class="card sealed clickable" onclick="sealedRecord('Тени Болот')"><h3>Тени Болот</h3><p>Запись ещё не открыта Архивом.</p></div>
+        <div class="card sealed clickable" onclick="sealedRecord('Осквернённые')"><h3>Осквернённые</h3><p>Запись ещё не открыта Архивом.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="archive" id="archive">
+    <div class="container">
+      <div class="kicker">Хроники Ильнира</div>
+      <h2>Великий Архив Камнеграда</h2>
+      <p>
+        Здесь хранятся имена тех, кого мир отказался забыть.
+        Великий Архив — это живая память Ильнира, летопись игроков,
+        династий, войн, государств и реликвий.
+      </p>
+
+      <div class="grid">
+        <div class="card"><h3>Путники Первой Волны</h3><p>Эта страница откроется после начала великого путешествия.</p></div>
+        <div class="card"><h3>Первый Император Ильнира</h3><p>В Ильнире ещё не взошёл первый император новой эпохи.</p></div>
+        <div class="card"><h3>Создатель Первого Государства</h3><p>Ни одно государство ещё не было вписано в летописи мира.</p></div>
+      </div>
+
+      <div class="quote">Каждая жизнь заканчивается. Не каждая история умирает. Мир помнит.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="kicker">Архивариус Камнеграда</div>
+      <h2>Хранитель знаний</h2>
+      <p>
+        Архивариус ещё собирает древние записи.
+        Позже он сможет отвечать на вопросы о мире Ильнира,
+        цивилизациях, династиях и Хрониках.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Heartlands: From Ashes to Empire</p>
+    <p>The World Remembers.</p>
+  </footer>
+
+  <div class="modal" id="infoModal">
+    <div class="modal-close" onclick="closeModal()">×</div>
+    <div class="modal-content">
+      <img id="modalImage" class="modal-image" alt="">
+      <div class="modal-text">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(image, title, text) {
+      const modalImage = document.getElementById("modalImage");
+
+      document.getElementById("modalTitle").innerText = title;
+      document.getElementById("modalDescription").innerText = text;
+
+      if (image) {
+        modalImage.src = image;
+        modalImage.alt = title;
+        modalImage.classList.add("show");
+      } else {
+        modalImage.src = "";
+        modalImage.alt = "";
+        modalImage.classList.remove("show");
+      }
+
+      document.getElementById("infoModal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function sealedRecord(title) {
+      openModal('', title, 'Эта запись ещё не открыта Архивом Камнеграда. Летопись будет раскрыта позднее.');
+    }
+
+    function closeModal() {
+      document.getElementById("infoModal").classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("infoModal").addEventListener("click", function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeModal();
+    });
+  </script>
+
+</body>
+</html>
